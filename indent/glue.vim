@@ -19,10 +19,6 @@ setlocal noexpandtab
 setlocal softtabstop=8
 setlocal tabstop=8
 setlocal shiftwidth=8
-
-setlocal cinoptions=>s
-
-setlocal cinoptions+=#1
     
 function! GlueIndent(lnum)
    let lnum = prevnonblank(a:lnum - 1)
@@ -34,7 +30,6 @@ function! GlueIndent(lnum)
    let lline = getline(lnum)
    
    if getline(prevnonblank(a:lnum))=~#'^\t\+[\|]'
-       echom getline(prevnonblank(a:lnum))
        return ind - &l:shiftwidth
     endif
 
