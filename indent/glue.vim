@@ -1,7 +1,7 @@
 " Vim indent file
 " Language: GlueLang
 " Maintainer: Yoshihiro Tanaka <feria.primavera@gmail.com>
-" Last Change: 2015 Jan 8
+" Last Change: 2015 Jan 12
 
 if exists('b:did_indent')
     finish
@@ -35,11 +35,15 @@ function! GlueIndent(lnum)
 
    if     lline =~# '^\t*[?\|]\{1}\s\+[^\s\t]\+'
        return ind + &l:shiftwidth
+   elseif lline =~# '\<proc\>\s\+\w\+\s\+=\s*'
+       return ind + &l:shiftwidth
    elseif lline =~# '\s\+=\s\+\<do\>\s*$'
        return ind + &l:shiftwidth
    elseif lline =~# '\w\+\s\+\\\s*$'
        return ind + &l:shiftwidth/2
    elseif lline =~# '^\t\+[^\s\t]\+'
+       return ind
+   elseif lline =~# '.\+'
        return ind
    endif
 
