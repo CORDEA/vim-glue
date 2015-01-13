@@ -7,3 +7,7 @@ This repository contains the syntax and indentation of the configuration file of
 ```vim
 NeoBundle 'CORDEA/vim-glue'
 ```
+
+## Like this
+
+![vim\_capture](./vim_capture.png)
