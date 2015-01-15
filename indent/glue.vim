@@ -1,7 +1,7 @@
 " Vim indent file
 " Language: GlueLang
 " Maintainer: Yoshihiro Tanaka <feria.primavera@gmail.com>
-" Last Change: 2015 Jan 13
+" Last Change: 2015 Jan 15
 
 if exists('b:did_indent')
     finish
@@ -22,24 +22,30 @@ setlocal shiftwidth=8
     
 function! GlueIndent(lnum)
     let lnum = prevnonblank(a:lnum - 1)
+    let nnum = prevnonblank(a:lnum)
+
     if lnum == 0
         return -1
     endif
    
     let ind = indent(lnum)
+
     let lline = getline(lnum)
+    let nline = getline(nnum)
    
-    if getline(prevnonblank(a:lnum)) =~# '^\t*|'
-        if   getline(prevnonblank(a:lnum)) =~# '\w\+'
-            return ind + &l:shiftwidth
-        else
+    if nline =~# '^\t*|' && nline !~# '\w\+'
             return ind - &l:shiftwidth
-        endif
     endif
 
     if     lline =~# '^\t*[?|]\{1}\s\+\w\+'
+        if nline =~# '^\t*[|#?]\s\+\w\+'
+            return ind
+        endif
         return ind + &l:shiftwidth
     elseif lline =~# '\<proc\>\s\+\w\+\s\+=\s*'
+        if nline =~# '^\t*[|#?]\s\+\w\+'
+            return ind
+        endif
         return ind + &l:shiftwidth
     elseif lline =~# '\s\+=\s\+\<do\>\s*$'
         return ind + &l:shiftwidth
