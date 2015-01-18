@@ -15,10 +15,10 @@ setlocal indentexpr=GlueIndent(v:lnum)
 
 setlocal indentkeys=0<Bar>,0?,0#,0=\,!^F,o,O
 
-setlocal noexpandtab
-setlocal softtabstop=8
-setlocal tabstop=8
-setlocal shiftwidth=8
+setlocal expandtab
+setlocal softtabstop=4
+setlocal tabstop=4
+setlocal shiftwidth=4
     
 function! GlueIndent(lnum)
     let lnum = prevnonblank(a:lnum - 1)
@@ -28,37 +28,43 @@ function! GlueIndent(lnum)
         return -1
     endif
    
+    let defaultIndent  = &l:shiftwidth
+    let diffIndent     = &l:shiftwidth * 2
+    " line continuation
+    let longLineIndent = &l:shiftwidth / 2
+    let whereIndent    = 6 " len(where) + space
+
     let ind = indent(lnum)
 
     let lline = getline(lnum)
     let nline = getline(nnum)
    
-    if nline =~# '^\t*|' && nline !~# '\w\+'
-            return ind - &l:shiftwidth
+    if nline =~# '^\s*|' && nline !~# '\w\+'
+        return ind - defaultIndent
     endif
 
-    if     lline =~# '^\t*[?|]\{1}\s\+\w\+'
-        if nline =~# '^\t*[|#?]\s\+\w\+'
-            return ind
-        endif
-        return ind + &l:shiftwidth
-    elseif lline =~# '^\t*\<proc\>\s\+\w\+\s\+=\s*' || lline =~# '^\t*\<diff\>\s\+\w\+\s\+\w\+\s*' 
-        if nline =~# '^\t*[|#?]\s\+\w\+'
-            return ind
-        endif
-        return ind + &l:shiftwidth
+    if     lline =~# '^\s*[?|]\{1}\s\+\w\+' || lline =~# '^\s*\<proc\>\s\+\w\+\s\+=\s*'
+        return CheckLine(nline, ind, defaultIndent)
+    elseif lline =~# '^\s*\<diff\>\s\+\w\+\s\+\w\+\s*' 
+        return CheckLine(nline, ind, diffIndent)
     elseif lline =~# '\s\+=\s\+\<do\>\s*$'
-        return ind + &l:shiftwidth
-    elseif lline =~# '^\t\+\<where\>\s\+\w\+'
-        echo lline
-        return ind + 6
+        return ind + defaultIndent
+    elseif lline =~# '^\s\+\<where\>\s\+\w\+'
+        return ind + whereIndent
     elseif lline =~# '\w\+\s\+\\\s*$'
-        return ind + &l:shiftwidth/2
-    elseif lline =~# '^\t\+\w\+'
+        return ind + longLineIndent
+    elseif lline =~# '^\s\+\w\+'
         return ind
     elseif lline =~# '.\+'
         return ind
     endif
 
     return -1
+endfunction
+
+function! CheckLine(nline, ind, addind)
+    if a:nline =~# '^\s*[|#?]\s\+\w\+'
+        return a:ind
+    endif
+    return a:ind + a:addind
 endfunction
