@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: GlueLang
 " Maintainer: Yoshihiro Tanaka <feria.primavera@gmail.com>
-" Last Change: 2015 Jan 16
+" Last Change: 2015 Jan 18
 
 if exists("b:current_syntax")
     finish
@@ -15,8 +15,9 @@ setlocal iskeyword+=>
 setlocal iskeyword+== 
 
 syntax keyword glueImport import
-syntax keyword glueType str file
+syntax keyword glueType str file diff
 syntax keyword glueStatement ? \| as do
+syntax keyword glueSpecial where
 syntax keyword gluePipe >>=
 syntax keyword glueAnd >>
 
@@ -33,6 +34,7 @@ highlight link glueStatement Statement
 highlight link glueFunctionStatement Statement
 highlight link glueComment Comment
 highlight link glueString String
+highlight link glueSpecial Special
 highlight link glueNumber Number
 highlight link glueArg Number
 highlight link gluePipe Operator
