@@ -10,4 +10,4 @@ NeoBundle 'CORDEA/vim-glue'
 
 ## Like this
 
-![vim\_capture](./vim_capture.png)
+![vim\_capture](./vim-glue.gif)
