@@ -1,7 +1,7 @@
 " Vim indent file
 " Language: GlueLang
-" Maintainer: Yoshihiro Tanaka <feria.primavera@gmail.com>
-" Last Change: 2015 Jan 19
+" Maintainer: Yoshihiro Tanaka <contact@cordea.jp>
+" Last Change: 2015 Mar 23
 
 if exists('b:did_indent')
     finish
@@ -13,7 +13,7 @@ set comments=:#
 setlocal noautoindent
 setlocal indentexpr=GlueIndent(v:lnum)
 
-setlocal indentkeys=0<Bar>,0?,0#,0=\,!^F,o,O
+setlocal indentkeys=0{,0},0#,0=\,!^F,o,O
 
 setlocal expandtab
 setlocal softtabstop=4
@@ -39,11 +39,12 @@ function! GlueIndent(lnum)
     let lline = getline(lnum)
     let nline = getline(nnum)
    
-    if nline =~# '^\s*|' && nline !~# '\w\+'
+    echo nline." : ".lline
+    if nline =~# '^\s*}' && nline !~# '{' && lline !~# '^\s*}'
         return ind - defaultIndent
     endif
 
-    if     lline =~# '^\s*[?|]\{1}\s\+\w\+'
+    if     lline =~# '^\s*{' || lline =~# '^\s*}\s\+!>\s\+{'
         return ind + defaultIndent
     elseif lline =~#  '^\s*\<proc\>\s\+\w\+\s\+=\s*'
         return CheckLine(nline, ind, defaultIndent)
@@ -65,7 +66,7 @@ function! GlueIndent(lnum)
 endfunction
 
 function! CheckLine(nline, ind, addind)
-    if a:nline =~# '^\s*[|#?]\s\+\w\+'
+    if a:nline =~# '^\s*[{}#]\s\+\w\+'
         return a:ind
     endif
     return a:ind + a:addind
