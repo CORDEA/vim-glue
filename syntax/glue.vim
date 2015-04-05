@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: GlueLang
 " Maintainer: Yoshihiro Tanaka <contact@cordea.jp>
-" Last Change: 2015 Mar 23
+" Last Change: 2015 Apr 5
 
 if exists("b:current_syntax")
     finish
