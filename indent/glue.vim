@@ -23,35 +23,33 @@ function! GlueIndent(lnum)
         return -1
     endif
 
-    let defaultIndent  = &l:shiftwidth
-
-    let ind = indent(lnum)
-    let lline = getline(lnum)
-    let nline = getline(a:lnum)
+    let pind = indent(lnum)
+    let pline = getline(lnum)
+    let cline = getline(a:lnum)
    
-    if nline =~# '^\s*\<!>\>\s*$'
-        return ind - defaultIndent
+    if cline =~# '^\s*\<!>\>\s*$'
+        return pind - &sw
     endif
 
-    if lline =~# '^\s*\<do\>\s*$' || lline =~# '^\s*\<!>\>\s\+.*\<do\>\s*$'
-        return ind + defaultIndent
-    elseif lline =~# '^\s\+\<where\>\s\+\w\+'
-        return ind + defaultIndent
-    elseif lline =~# '^\s*\<while\>\s*$' || lline =~# '^.\+\s\+\<foreach\>\s*$'
-        return ind + defaultIndent
-    elseif lline =~# '^\s*\<proc\>\s\+\w\+\s\+=\s*'
-        return CheckLine(nline, ind, defaultIndent)
-    elseif lline =~# '^\s*\<diff\>\s\+\w\+\s\+\w\+\s*' 
-        return CheckLine(nline, ind, diffIndent)
-    elseif lline =~# '\w\+\s\+\\\s*$'
-        return ind + defaultIndent
+    if pline =~# '^\s*\<do\>\s*$' || pline =~# '^\s*\<!>\>\s\+.*\<do\>\s*$'
+        return pind + &sw
+    elseif pline =~# '^\s\+\<where\>\s\+\w\+'
+        return pind + &sw
+    elseif pline =~# '^\s*\<while\>\s*$' || pline =~# '^.\+\s\+\<foreach\>\s*$'
+        return pind + &sw
+    elseif pline =~# '^\s*\<proc\>\s\+\w\+\s\+=\s*'
+        return CheckLine(cline, pind, defaultIndent)
+    elseif pline =~# '^\s*\<diff\>\s\+\w\+\s\+\w\+\s*'
+        return CheckLine(cline, pind, diffIndent)
+    elseif pline =~# '\w\+\s\+\\\s*$'
+        return pind + &sw
     endif
 
     return -1
 endfunction
 
-function! CheckLine(nline, ind, addind)
-    if a:nline =~# '^\s*#\s\+\w\+'
+function! CheckLine(cline, ind, addind)
+    if a:cline =~# '^\s*#\s\+\w\+'
         return a:ind
     endif
     return a:ind + a:addind
