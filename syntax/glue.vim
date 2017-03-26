@@ -20,6 +20,7 @@ syntax keyword glueStatement !> ?> as do eachline
 syntax keyword glueSpecial where
 syntax keyword gluePipe >>=
 syntax keyword glueAnd >>
+syntax keyword glueRepeat foreach while
 
 syntax region glueString start=/'/ end=/'/
 syntax region glueFunction matchgroup=glueFunctionStatement start=/\<proc\>\s\+/ matchgroup=null end=/\s\+=/
@@ -40,3 +41,4 @@ highlight link glueArg Number
 highlight link gluePipe Operator
 highlight link glueAnd Operator
 highlight link glueFunction Function
+highlight link glueRepeat Repeat
