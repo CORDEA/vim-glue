@@ -9,13 +9,14 @@ endif
 
 syntax case match
 
-setlocal iskeyword+=! 
-setlocal iskeyword+=> 
-setlocal iskeyword+== 
+setlocal iskeyword+=!
+setlocal iskeyword+=?
+setlocal iskeyword+=>
+setlocal iskeyword+==
 
 syntax keyword glueImport import
 syntax keyword glueType str file diff
-syntax keyword glueStatement !> as do eachline
+syntax keyword glueStatement !> ?> as do eachline
 syntax keyword glueSpecial where
 syntax keyword gluePipe >>=
 syntax keyword glueAnd >>
