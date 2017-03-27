@@ -22,7 +22,3 @@ repo = 'CORDEA/vim-glue'
 ```vim
 NeoBundle 'CORDEA/vim-glue'
 ```
-
-## Like this
-
-![vim\_capture](./vim-glue.gif)
