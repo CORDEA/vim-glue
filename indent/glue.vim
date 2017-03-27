@@ -1,7 +1,7 @@
 " Vim indent file
 " Language: GlueLang
 " Maintainer: Yoshihiro Tanaka <contact@cordea.jp>
-" Last Change: 2015 Apr 5
+" Last Change: 2017 Mar 27
 
 if exists('b:did_indent')
     finish
