@@ -4,6 +4,21 @@ This repository contains the syntax and indentation of the configuration file of
 
 ## Installtion
 
+### dein
+
+```vim
+dein#add('CORDEA/vim-glue')
+```
+
+or
+
+```toml
+[[plugins]]
+repo = 'CORDEA/vim-glue'
+```
+
+### NeoBundle
+
 ```vim
 NeoBundle 'CORDEA/vim-glue'
 ```
